@@ -1,0 +1,31 @@
+public void mergeAudioFiles()
+{	
+	String audioStorageBasePath = "D:\\Audio";
+	try
+	{
+		if(Files.exists(Paths.get(audioStorageBasePath)))
+		{
+			String txtFileName = "\\" + "AudioList.txt";
+			String getTextFile = createFileListTxt(audioStorageBasePath, txtFileName);
+			String ffmpegLocation = "C:\\ffmpeg\\bin\\ffmpeg";
+			String mergedAudioFileName = "\\MergedAudio.webm";
+			String[] cmd = {
+					ffmpegLocation, 
+					"-f", "concat", "-safe", "0", "-i", 
+					audioStorageBasePath + txtFileName, "-c", 
+					"copy", audioStorageBasePath + mergedAudioFileName
+				};
+			
+			if(getTextFile == null) {
+				Runtime.getRuntime().exec(cmd);
+				System.out.println("Merging Audios");
+			}
+			else
+				System.out.println(getTextFile);
+		}
+	} 
+	catch (Exception e)
+	{
+		e.printStackTrace();
+	}	
+}
